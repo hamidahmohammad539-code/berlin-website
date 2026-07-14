@@ -20,10 +20,11 @@ if (!MONGODB_URI) {
   process.exit(1);
 }
 
+// إعداد الـ CORS بشكل آمن ومفتوح لجميع المسارات والطلبات
 app.use(cors({
     origin: '*',
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
-    allowedHeaders: ['Content-Type', 'Authorization']
+    allowedHeaders: ['Content-Type', 'Authorization', 'x-admin-password']
 }));
 app.use(express.json({ limit: '15mb' })); // 15mb: chat/reconcile avatars & room photos are base64 images
 
@@ -31,7 +32,7 @@ app.use(express.json({ limit: '15mb' })); // 15mb: chat/reconcile avatars & room
    Mongo connection
    --------------------------------------------------------- */
 mongoose.connect(MONGODB_URI)
-  .then(() => console.log('MongoDB connected'))
+  .then(() => console.log('MongoDB connected successfully!'))
   .catch(err => {
     console.error('MongoDB connection error:', err.message);
     process.exit(1);
@@ -42,7 +43,7 @@ mongoose.connect(MONGODB_URI)
    need to design strict per-collection schemas. */
 const flexible = new mongoose.Schema({}, { strict: false, minimize: false });
 
-const Delivery         = mongoose.model('Delivery', flexible, 'deliveries');
+const Delivery       = mongoose.model('Delivery', flexible, 'deliveries');
 const InboxMessage     = mongoose.model('InboxMessage', flexible, 'inbox_messages');
 const Confession       = mongoose.model('Confession', flexible, 'confessions');
 const ChatMessage      = mongoose.model('ChatMessage', flexible, 'chat_messages');
@@ -76,7 +77,7 @@ function clean(doc) {
 }
 function cleanAll(docs) { return docs.map(clean); }
 
-app.get('/', (req, res) => res.send('BERLIN // TRANSMISSION API is running.'));
+app.get('/', (req, res) => res.send('BERLIN // TRANSMISSION API is running successfully.'));
 app.get('/api/health', (req, res) => res.json({ ok: true }));
 
 /* ---------------------------------------------------------
@@ -123,7 +124,8 @@ app.post('/api/confessions/delete', requireAdmin, async (req, res) => {
 app.get('/api/chat/name-check', async (req, res) => {
   const name = (req.query.name || '').toLowerCase();
   const exists = await ChatName.exists({ name });
-  res.json(!!exists);
+  // نعيد النتيجة كـ JSON واضح لتجنب أي مشاكل في الفحص بالـ Frontend
+  res.json({ taken: !!exists });
 });
 app.post('/api/chat/name-register', async (req, res) => {
   await ChatName.create({ name: (req.body.name || '').toLowerCase() });
@@ -152,7 +154,7 @@ app.get('/api/dino/leaderboard', async (req, res) => {
 app.get('/api/dino/name-check', async (req, res) => {
   const name = (req.query.name || '').toLowerCase();
   const exists = await DinoScore.exists({ name: new RegExp(`^${name}$`, 'i') });
-  res.json(!!exists);
+  res.json({ taken: !!exists });
 });
 app.post('/api/dino/score', async (req, res) => {
   const { name, score } = req.body;
