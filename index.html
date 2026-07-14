@@ -1,0 +1,622 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>BERLIN // TRANSMISSION</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&family=Rajdhani:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- Hidden audio element for hover sound -->
+<audio id="hoverSound" src="hover.mp3" preload="auto"></audio>
+
+<!-- ============ LANGUAGE / SETTINGS GEAR + ADMIN LOCK (global, floats above every screen) ============ -->
+<div class="lang-widget">
+  <div class="widget-row">
+    <button id="adminLockBtn" class="gear-btn lock-btn" aria-label="Admin" aria-haspopup="true" aria-expanded="false">
+      <svg class="lock-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect x="5" y="11" width="14" height="10" rx="2" stroke="currentColor" stroke-width="1.6"/>
+        <path d="M8 11V7.5a4 4 0 1 1 8 0V11" stroke="currentColor" stroke-width="1.6"/>
+        <circle cx="12" cy="15.5" r="1.4" fill="currentColor"/>
+      </svg>
+    </button>
+
+    <button id="langGearBtn" class="gear-btn" aria-label="Language settings" aria-haspopup="true" aria-expanded="false">
+      <svg class="gear-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M12 15.5A3.5 3.5 0 1 0 12 8.5a3.5 3.5 0 0 0 0 7Z" stroke="currentColor" stroke-width="1.6"/>
+        <path d="M19.4 13.5a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V19.5a2 2 0 1 1-4 0v-.09a1.65 1.65 0 0 0-1.08-1.51 1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H4.5a2 2 0 1 1 0-4h.09a1.65 1.65 0 0 0 1.51-1.08 1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H10.5a1.65 1.65 0 0 0 1-1.51V4.5a2 2 0 1 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V10.5a1.65 1.65 0 0 0 1.51 1H19.5a2 2 0 1 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1Z" stroke="currentColor" stroke-width="1.4"/>
+      </svg>
+      <span class="gear-label" data-i18n="langLabel">Language</span>
+    </button>
+  </div>
+
+  <!-- Admin password panel -->
+  <div class="lang-panel admin-panel" id="adminLoginPanel" role="menu">
+    <div class="lang-panel-title">ADMIN ACCESS</div>
+    <form id="adminLoginForm" class="admin-login-form">
+      <input type="password" id="adminPasswordInput" placeholder="PASSWORD" autocomplete="off" required>
+      <button type="submit" class="glass-btn action-btn admin-login-btn">UNLOCK</button>
+      <p class="hint-text" id="adminLoginError"></p>
+    </form>
+  </div>
+
+  <div class="lang-panel" id="langPanel" role="menu">
+    <div class="lang-panel-title" data-i18n="langChoose">Choose language</div>
+    <button class="lang-option" data-lang="en" role="menuitem">
+      <span class="lang-flag">EN</span><span>English</span>
+    </button>
+    <button class="lang-option" data-lang="ar" role="menuitem">
+      <span class="lang-flag">AR</span><span>العربية</span>
+    </button>
+    <button class="lang-option" data-lang="fr" role="menuitem">
+      <span class="lang-flag">FR</span><span>Français</span>
+    </button>
+    <button class="lang-option" data-lang="es" role="menuitem">
+      <span class="lang-flag">ES</span><span>Español</span>
+    </button>
+    <button class="lang-option" data-lang="de" role="menuitem">
+      <span class="lang-flag">DE</span><span>Deutsch</span>
+    </button>
+    <button class="lang-option" data-lang="it" role="menuitem">
+      <span class="lang-flag">IT</span><span>Italiano</span>
+    </button>
+    <button class="lang-option" data-lang="tr" role="menuitem">
+      <span class="lang-flag">TR</span><span>Türkçe</span>
+    </button>
+    <button class="lang-option" data-lang="ru" role="menuitem">
+      <span class="lang-flag">RU</span><span>Русский</span>
+    </button>
+    <button class="lang-option" data-lang="zh" role="menuitem">
+      <span class="lang-flag">中</span><span>中文</span>
+    </button>
+    <button class="lang-option" data-lang="ja" role="menuitem">
+      <span class="lang-flag">日</span><span>日本語</span>
+    </button>
+    <button class="lang-option" data-lang="pt" role="menuitem">
+      <span class="lang-flag">PT</span><span>Português</span>
+    </button>
+    <button class="lang-option" data-lang="hi" role="menuitem">
+      <span class="lang-flag">HI</span><span>हिन्दी</span>
+    </button>
+  </div>
+</div>
+
+<!-- ============ SCREEN 0 : ENTRY ============ -->
+<section id="entryScreen" class="screen active">
+  <video class="bg-video" id="video1" autoplay muted loop playsinline>
+    <source src="space1.mp4" type="video/mp4">
+  </video>
+  <div class="entry-overlay">
+    <div class="entry-mark">B E R L I N</div>
+    <div class="protection-line" data-i18n="protectionText">This site is protected by Berlin. Any hacking attempt — Berlin is ready for it, and it's non-negotiable.</div>
+    <button id="enterBtn" class="glass-btn enter-btn">
+      <span class="btn-text" data-i18n="enter">ENTER</span>
+      <span class="btn-ring"></span>
+    </button>
+    <div class="entry-sub" data-i18n="standby">TRANSMISSION STANDING BY</div>
+  </div>
+</section>
+
+<!-- ============ ZOOM TRANSITION LAYER ============ -->
+<div id="zoomLayer" class="zoom-layer"></div>
+
+<!-- ============ SCREEN 1 : MAIN MENU ============ -->
+<section id="mainScreen" class="screen">
+  <video class="bg-video" id="video2" autoplay muted loop playsinline>
+    <source src="space2.mp4" type="video/mp4">
+  </video>
+  <div class="scanlines"></div>
+
+  <header class="main-header">
+    <div class="logo-mark">B E R L I N</div>
+    <div class="status-line"><span data-i18n="signal">SIGNAL</span> <span class="dot-live"></span> <span data-i18n="live">LIVE</span></div>
+  </header>
+
+  <nav class="menu-grid" id="menuGrid">
+    <button class="menu-item" data-target="page-games">
+      <span class="menu-index">01</span>
+      <span class="menu-label" data-i18n="menuGames">BERLIN GAMES</span>
+      <span class="menu-glow"></span>
+    </button>
+    <button class="menu-item" data-target="page-request">
+      <span class="menu-index">02</span>
+      <span class="menu-label" data-i18n="menuRequest">FREE WEBSITE REQUEST</span>
+      <span class="menu-glow"></span>
+    </button>
+    <button class="menu-item" data-target="page-who">
+      <span class="menu-index">03</span>
+      <span class="menu-label" data-i18n="menuWho">WHO IS BERLIN</span>
+      <span class="menu-glow"></span>
+    </button>
+    <button class="menu-item" data-target="page-lover">
+      <span class="menu-index">04</span>
+      <span class="menu-label" data-i18n="menuLover">BERLIN LOVER</span>
+      <span class="menu-glow"></span>
+    </button>
+    <button class="menu-item" data-target="page-deliver">
+      <span class="menu-index">05</span>
+      <span class="menu-label" data-i18n="menuDeliver">DELIVER A MESSAGE</span>
+      <span class="menu-glow"></span>
+    </button>
+    <button class="menu-item" data-target="page-confess">
+      <span class="menu-index">06</span>
+      <span class="menu-label" data-i18n="menuConfess">CONFESSIONS</span>
+      <span class="menu-glow"></span>
+    </button>
+    <button class="menu-item" data-target="page-sendme">
+      <span class="menu-index">07</span>
+      <span class="menu-label" data-i18n="menuSendMe">MESSAGE ME ANONYMOUSLY</span>
+      <span class="menu-glow"></span>
+    </button>
+    <button class="menu-item" data-target="page-chat">
+      <span class="menu-index">08</span>
+      <span class="menu-label" data-i18n="menuChat">CONFESSION CHAT</span>
+      <span class="menu-glow"></span>
+    </button>
+    <button class="menu-item" data-target="page-dino">
+      <span class="menu-index">09</span>
+      <span class="menu-label" data-i18n="menuDino">DINO RUN</span>
+      <span class="menu-glow"></span>
+    </button>
+    <button class="menu-item" data-target="page-poems">
+      <span class="menu-index">10</span>
+      <span class="menu-label" data-i18n="menuPoems">POEMS</span>
+      <span class="menu-glow"></span>
+    </button>
+    <button class="menu-item" data-target="page-reconcile">
+      <span class="menu-index">11</span>
+      <span class="menu-label" data-i18n="menuReconcile">LET'S MAKE UP</span>
+      <span class="menu-glow"></span>
+    </button>
+    <button class="menu-item" data-target="page-rooms">
+      <span class="menu-index">12</span>
+      <span class="menu-label" data-i18n="menuRooms">ROOMS</span>
+      <span class="menu-glow"></span>
+    </button>
+  </nav>
+</section>
+
+<!-- ============ SUB PAGE : BERLIN GAMES ============ -->
+<section id="page-games" class="screen subpage has-video">
+  <video class="bg-video" autoplay muted loop playsinline>
+    <source src="ambient.mp4" type="video/mp4">
+  </video>
+  <div class="subpage-bg video-tint"></div>
+  <button class="home-btn" data-home>
+    <span class="home-icon">⌂</span> <span data-i18n="home">HOME</span>
+  </button>
+  <div class="subpage-content center-content">
+    <h1 class="subpage-title" data-i18n="gamesTitle">BERLIN GAMES</h1>
+    <p class="subpage-text" data-i18n="gamesText">The arena only exists inside the app.<br>Open Safari to enter the game world.</p>
+    <a href="https://berlin-game1.onrender.com" target="_blank" rel="noopener" class="glass-btn action-btn" data-i18n="gamesBtn">OPEN IN SAFARI</a>
+    <p class="hint-text" data-i18n="gamesHint">Redirecting keeps the experience running native &amp; fast.</p>
+  </div>
+</section>
+
+<!-- ============ SUB PAGE : FREE WEBSITE REQUEST ============ -->
+<section id="page-request" class="screen subpage has-video">
+  <video class="bg-video" autoplay muted loop playsinline>
+    <source src="ambient.mp4" type="video/mp4">
+  </video>
+  <div class="subpage-bg video-tint"></div>
+  <button class="home-btn" data-home>
+    <span class="home-icon">⌂</span> <span data-i18n="home">HOME</span>
+  </button>
+  <div class="subpage-content center-content">
+    <h1 class="subpage-title" data-i18n="requestTitle">FREE WEBSITE REQUEST</h1>
+    <p class="subpage-text" data-i18n="requestText">Tell us who you are and what you're building.<br>We reply within 48 hours.</p>
+    <form class="request-form" id="requestForm">
+      <input type="text" data-i18n-placeholder="formName" placeholder="NAME" required>
+      <input type="email" data-i18n-placeholder="formEmail" placeholder="EMAIL" required>
+      <textarea data-i18n-placeholder="formMessage" placeholder="WHAT DO YOU WANT US TO BUILD?" rows="4" required></textarea>
+      <button type="submit" class="glass-btn action-btn" data-i18n="requestBtn">SEND REQUEST</button>
+    </form>
+    <p class="hint-text" id="requestConfirm"></p>
+  </div>
+</section>
+
+<!-- ============ SUB PAGE : WHO IS BERLIN ============ -->
+<section id="page-who" class="screen subpage has-video">
+  <video class="bg-video" autoplay muted loop playsinline>
+    <source src="ambient.mp4" type="video/mp4">
+  </video>
+  <div class="subpage-bg video-tint"></div>
+  <button class="home-btn" data-home>
+    <span class="home-icon">⌂</span> <span data-i18n="home">HOME</span>
+  </button>
+  <div class="subpage-content center-content">
+    <div class="who-lines" id="whoLines">
+      <p class="who-line" data-line="1" data-i18n="whoLine1">I AM NOT LIKE EVERYBODY ELSE</p>
+      <p class="who-line" data-line="2" data-i18n="whoLine2">I DON'T WANT TO BE LIKE EVERYBODY ELSE</p>
+      <p class="who-line" data-line="3" data-i18n="whoLine3">I HAVE SOMETHING INSIDE BURNING</p>
+      <p class="who-line" data-line="4" data-i18n="whoLine4">I'M SUPPOSED TO BE SOMETHING DIFFERENT</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SUB PAGE : BERLIN LOVER ============ -->
+<section id="page-lover" class="screen subpage has-video">
+  <video class="bg-video" autoplay muted loop playsinline>
+    <source src="lover.mp4" type="video/mp4">
+  </video>
+  <div class="subpage-bg lover-bg video-tint"></div>
+  <button class="home-btn" data-home>
+    <span class="home-icon">⌂</span> <span data-i18n="home">HOME</span>
+  </button>
+  <div class="subpage-content center-content">
+    <div class="heart-wrap">
+      <svg class="heart-svg" viewBox="0 0 200 180" aria-hidden="true">
+        <defs>
+          <linearGradient id="heartGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stop-color="#ff2e88"/>
+            <stop offset="55%" stop-color="#ff6fb3"/>
+            <stop offset="100%" stop-color="#c026ff"/>
+          </linearGradient>
+          <filter id="heartGlow" x="-60%" y="-60%" width="220%" height="220%">
+            <feGaussianBlur stdDeviation="6" result="blur"/>
+            <feMerge>
+              <feMergeNode in="blur"/>
+              <feMergeNode in="SourceGraphic"/>
+            </feMerge>
+          </filter>
+        </defs>
+        <path filter="url(#heartGlow)" fill="url(#heartGrad)" d="M100,170 C40,120 5,85 5,52 C5,25 25,5 52,5 C72,5 90,17 100,38 C110,17 128,5 148,5 C175,5 195,25 195,52 C195,85 160,120 100,170 Z"/>
+        <text x="100" y="105" text-anchor="middle" class="heart-letter">S</text>
+      </svg>
+    </div>
+    <p class="subpage-text" data-i18n="loverText">SOME NAMES BURN BRIGHTER THAN OTHERS.</p>
+  </div>
+</section>
+
+<!-- ============ SUB PAGE : DELIVER A MESSAGE (to someone, anonymously) ============ -->
+<section id="page-deliver" class="screen subpage solar-page">
+  <video class="bg-video" id="videoDeliver" autoplay muted loop playsinline>
+    <source src="planets.mp4" type="video/mp4">
+  </video>
+  <div class="solar-overlay"></div>
+  <button class="home-btn" data-home>
+    <span class="home-icon">⌂</span> <span data-i18n="home">HOME</span>
+  </button>
+  <div class="subpage-content center-content">
+    <h1 class="subpage-title" data-i18n="deliverTitle">DELIVER A MESSAGE</h1>
+    <p class="subpage-text" data-i18n="deliverText">Pick a platform, write your message, tell us who it's for.<br>They'll get it — they just won't know it came from you.</p>
+
+    <form class="glass-form" id="deliverForm">
+      <div class="field-label" data-i18n="platformLabel">CHOOSE THE PLATFORM</div>
+      <div class="planet-select" id="platformSelect">
+        <button type="button" class="planet-option" data-platform="instagram">
+          <span class="planet-dot planet-insta"></span><span data-i18n="platformInsta">Instagram</span>
+        </button>
+        <button type="button" class="planet-option" data-platform="snapchat">
+          <span class="planet-dot planet-snap"></span><span data-i18n="platformSnap">Snapchat</span>
+        </button>
+        <button type="button" class="planet-option" data-platform="twitter">
+          <span class="planet-dot planet-twitter"></span><span data-i18n="platformTwitter">Twitter / X</span>
+        </button>
+        <button type="button" class="planet-option" data-platform="whatsapp">
+          <span class="planet-dot planet-whatsapp"></span><span data-i18n="platformWhatsapp">WhatsApp</span>
+        </button>
+      </div>
+
+      <div class="field-label" data-i18n="usernameLabel">PERSON'S USERNAME</div>
+      <input type="text" id="deliverUsername" data-i18n-placeholder="usernamePlaceholder" placeholder="USERNAME" required>
+
+      <div class="field-label" data-i18n="messageLabel">YOUR MESSAGE</div>
+      <textarea id="deliverMessage" rows="4" data-i18n-placeholder="messagePlaceholder" placeholder="WRITE YOUR MESSAGE" required></textarea>
+
+      <button type="submit" class="glass-btn action-btn" data-i18n="deliverBtn">SEND IT</button>
+    </form>
+    <p class="hint-text" id="deliverConfirm"></p>
+  </div>
+</section>
+
+<!-- ============ SUB PAGE : CONFESSIONS (permanent, anonymous board) ============ -->
+<section id="page-confess" class="screen subpage has-video">
+  <video class="bg-video" autoplay muted loop playsinline>
+    <source src="ambient.mp4" type="video/mp4">
+  </video>
+  <div class="subpage-bg video-tint"></div>
+  <button class="home-btn" data-home>
+    <span class="home-icon">⌂</span> <span data-i18n="home">HOME</span>
+  </button>
+  <div class="subpage-content center-content">
+    <h1 class="subpage-title" data-i18n="confessTitle">CONFESSIONS</h1>
+    <p class="subpage-text" data-i18n="confessText">Say what you really think. It's posted anonymously — and it stays.</p>
+
+    <form class="glass-form" id="confessForm">
+      <textarea id="confessInput" rows="3" data-i18n-placeholder="confessPlaceholder" placeholder="TYPE YOUR CONFESSION" required></textarea>
+      <button type="submit" class="glass-btn action-btn" data-i18n="confessBtn">POST IT</button>
+    </form>
+
+    <div class="confess-feed" id="confessFeed">
+      <p class="hint-text" id="confessEmpty" data-i18n="confessEmpty">No confessions yet — be the first.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SUB PAGE : MESSAGE ME ANONYMOUSLY ============ -->
+<section id="page-sendme" class="screen subpage solar-page">
+  <video class="bg-video" id="videoSendMe" autoplay muted loop playsinline>
+    <source src="planets.mp4" type="video/mp4">
+  </video>
+  <div class="solar-overlay"></div>
+  <button class="home-btn" data-home>
+    <span class="home-icon">⌂</span> <span data-i18n="home">HOME</span>
+  </button>
+  <div class="subpage-content center-content">
+    <h1 class="subpage-title" data-i18n="sendMeTitle">MESSAGE ME ANONYMOUSLY</h1>
+    <p class="subpage-text" data-i18n="sendMeText">Whatever it is, I'll never know it's you.</p>
+    <form class="glass-form" id="sendMeForm">
+      <textarea id="sendMeInput" rows="4" data-i18n-placeholder="sendMePlaceholder" placeholder="WRITE YOUR MESSAGE HERE" required></textarea>
+      <div class="form-btn-row">
+        <button type="submit" class="glass-btn action-btn" data-i18n="sendMeBtn">SEND</button>
+        <button type="button" class="glass-btn action-btn" data-home data-i18n="backBtn">BACK</button>
+      </div>
+    </form>
+    <p class="hint-text" id="sendMeConfirm"></p>
+  </div>
+</section>
+
+<!-- ============ SUB PAGE : CONFESSION CHAT (group chat, text only) ============ -->
+<section id="page-chat" class="screen subpage has-video">
+  <video class="bg-video" autoplay muted loop playsinline>
+    <source src="ambient.mp4" type="video/mp4">
+  </video>
+  <div class="subpage-bg video-tint"></div>
+  <button class="home-btn" data-home>
+    <span class="home-icon">⌂</span> <span data-i18n="home">HOME</span>
+  </button>
+  <div class="subpage-content chat-content">
+
+    <div id="chatJoin" class="chat-join">
+      <h1 class="subpage-title" data-i18n="chatTitle">CONFESSION CHAT</h1>
+      <p class="subpage-text" data-i18n="chatText">Create a profile, join the room, talk to everyone else here.<br>No photos, no audio — words only.</p>
+      <form class="glass-form" id="chatJoinForm">
+        <div class="field-label" data-i18n="chatPhotoLabel">PROFILE PICTURE</div>
+        <label class="avatar-upload" id="avatarUpload">
+          <input type="file" id="chatAvatarInput" accept="image/*">
+          <span class="avatar-preview" id="avatarPreview">+</span>
+        </label>
+        <div class="field-label" data-i18n="chatNameLabel">YOUR NAME</div>
+        <input type="text" id="chatNameInput" data-i18n-placeholder="chatNamePlaceholder" placeholder="PICK A NAME" required>
+        <button type="submit" class="glass-btn action-btn" data-i18n="chatJoinBtn">ENTER THE ROOM</button>
+        <p class="hint-text" id="chatNameTakenMsg"></p>
+      </form>
+    </div>
+
+    <div id="chatRoom" class="chat-room" style="display:none;">
+      <div class="chat-room-toolbar">
+        <button type="button" class="glass-btn notif-btn" id="chatNotifBtn">
+          <span id="chatNotifBtnLabel" data-i18n="notifOff">🔕 GET NOTIFIED</span>
+        </button>
+      </div>
+      <div class="chat-messages" id="chatMessages"></div>
+      <div id="chatReplyBar" class="chat-reply-bar" style="display:none;">
+        <div class="chat-reply-bar-text">
+          <span data-i18n="replyingTo">REPLYING TO</span> <b id="chatReplyBarName"></b>
+          <p id="chatReplyBarSnippet"></p>
+        </div>
+        <button type="button" id="chatReplyCancelBtn" aria-label="Cancel reply">✕</button>
+      </div>
+      <form class="chat-input-row" id="chatSendForm">
+        <input type="text" id="chatMessageInput" data-i18n-placeholder="chatPlaceholder" placeholder="SAY SOMETHING…" autocomplete="off" required>
+        <button type="submit" class="glass-btn chat-send-btn" data-i18n="chatSendBtn">SEND</button>
+      </form>
+    </div>
+
+  </div>
+</section>
+
+<!-- ============ SUB PAGE : DINO RUN (endless runner + leaderboard) ============ -->
+<section id="page-dino" class="screen subpage has-video">
+  <video class="bg-video" autoplay muted loop playsinline>
+    <source src="ambient.mp4" type="video/mp4">
+  </video>
+  <div class="subpage-bg video-tint"></div>
+  <button class="home-btn" data-home>
+    <span class="home-icon">⌂</span> <span data-i18n="home">HOME</span>
+  </button>
+  <div class="subpage-content center-content dino-content">
+    <h1 class="subpage-title" data-i18n="dinoTitle">DINO RUN</h1>
+
+    <div id="dinoNameGate" class="dino-name-gate">
+      <p class="subpage-text" data-i18n="dinoText">Pick a runner name — top score gets the crown.</p>
+      <form class="glass-form" id="dinoNameForm">
+        <input type="text" id="dinoNameInput" data-i18n-placeholder="dinoNamePlaceholder" placeholder="RUNNER NAME" required>
+        <button type="submit" class="glass-btn action-btn" data-i18n="dinoNameSubmit">START</button>
+        <p class="hint-text" id="dinoNameTakenMsg"></p>
+      </form>
+    </div>
+
+    <div id="dinoGameWrap" class="dino-game-wrap" style="display:none;">
+      <div class="dino-hud">
+        <span id="dinoScoreLine">0</span>
+        <span id="dinoBestLine"></span>
+      </div>
+      <canvas id="dinoCanvas" width="600" height="200"></canvas>
+      <p class="hint-text" data-i18n="dinoHint">TAP / SPACE TO JUMP</p>
+
+      <div class="dino-leaderboard">
+        <div class="field-label" data-i18n="dinoLeaderboard">LEADERBOARD</div>
+        <ol id="dinoBoard" class="dino-board"></ol>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SUB PAGE : POEMS (permanent, public feed) ============ -->
+<section id="page-poems" class="screen subpage has-video">
+  <video class="bg-video" autoplay muted loop playsinline>
+    <source src="ambient.mp4" type="video/mp4">
+  </video>
+  <div class="subpage-bg video-tint"></div>
+  <button class="home-btn" data-home>
+    <span class="home-icon">⌂</span> <span data-i18n="home">HOME</span>
+  </button>
+  <div class="subpage-content center-content">
+    <h1 class="subpage-title" data-i18n="poemsTitle">POEMS</h1>
+    <p class="subpage-text" data-i18n="poemsText">Write it like a poem. It stays here for everyone to read.</p>
+
+    <form class="glass-form" id="poemForm">
+      <input type="text" id="poemAuthorInput" data-i18n-placeholder="poemAuthorPlaceholder" placeholder="NAME (OPTIONAL)">
+      <textarea id="poemInput" rows="4" data-i18n-placeholder="poemPlaceholder" placeholder="WRITE YOUR POEM" required></textarea>
+      <button type="submit" class="glass-btn action-btn" data-i18n="poemBtn">POST IT</button>
+    </form>
+
+    <div class="confess-feed" id="poemFeed">
+      <p class="hint-text" id="poemEmpty" data-i18n="poemEmpty">No poems yet — be the first.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SUB PAGE : LET'S MAKE UP (private, link + password protected 2-person chat) ============ -->
+<section id="page-reconcile" class="screen subpage has-video">
+  <video class="bg-video" autoplay muted loop playsinline>
+    <source src="lover.mp4" type="video/mp4">
+  </video>
+  <div class="subpage-bg lover-bg video-tint"></div>
+  <button class="home-btn" data-home>
+    <span class="home-icon">⌂</span> <span data-i18n="home">HOME</span>
+  </button>
+  <div class="subpage-content center-content chat-content">
+
+    <!-- View A: no ?room= in URL — create a new reconcile room -->
+    <div id="reconcileCreate" class="chat-join">
+      <h1 class="subpage-title" data-i18n="reconcileTitle">LET'S MAKE UP</h1>
+      <p class="subpage-text" data-i18n="reconcileText">Make a private room, give it a name and a password, and send the link to that one person.</p>
+      <form class="glass-form" id="reconcileCreateForm">
+        <div class="field-label" data-i18n="chatPhotoLabel">PROFILE PICTURE</div>
+        <label class="avatar-upload" id="reconcilePhotoUpload">
+          <input type="file" id="reconcilePhotoInput" accept="image/*">
+          <span class="avatar-preview" id="reconcilePhotoPreview">+</span>
+        </label>
+        <div class="field-label" data-i18n="reconcileNameLabel">NAME THIS ROOM</div>
+        <input type="text" id="reconcileNameInput" data-i18n-placeholder="reconcileNamePlaceholder" placeholder="ROOM NAME" required>
+        <div class="field-label" data-i18n="reconcilePassLabel">SET A PASSWORD</div>
+        <input type="text" id="reconcilePassInput" data-i18n-placeholder="reconcilePassPlaceholder" placeholder="PASSWORD" required>
+        <button type="submit" class="glass-btn action-btn" data-i18n="reconcileCreateBtn">CREATE THE LINK</button>
+      </form>
+
+      <div id="reconcileLinkBox" class="reconcile-link-box" style="display:none;">
+        <p class="hint-text" data-i18n="reconcileLinkReady">SEND THIS LINK TO THAT PERSON:</p>
+        <div class="reconcile-link-row">
+          <input type="text" id="reconcileLinkOutput" readonly>
+          <button type="button" class="glass-btn chat-send-btn" id="reconcileCopyBtn" data-i18n="reconcileCopyBtn">COPY</button>
+        </div>
+        <p class="hint-text" id="reconcileCopiedMsg"></p>
+      </div>
+    </div>
+
+    <!-- View B: ?room=ID present, password not yet verified -->
+    <div id="reconcileGate" class="chat-join" style="display:none;">
+      <span class="avatar-preview reconcile-gate-photo" id="reconcileGatePhoto">♥</span>
+      <h1 class="subpage-title" id="reconcileGateName">—</h1>
+      <p class="subpage-text" data-i18n="reconcileGateText">This room is locked. Enter the password to go in.</p>
+      <form class="glass-form" id="reconcileGateForm">
+        <input type="password" id="reconcileGatePassInput" data-i18n-placeholder="reconcilePassPlaceholder" placeholder="PASSWORD" required>
+        <button type="submit" class="glass-btn action-btn" data-i18n="reconcileGateBtn">ENTER</button>
+        <p class="hint-text" id="reconcileGateError"></p>
+      </form>
+    </div>
+
+    <!-- View C: password verified, pick a display name before chatting -->
+    <div id="reconcileNameGate" class="chat-join" style="display:none;">
+      <h1 class="subpage-title" id="reconcileChatTitle">—</h1>
+      <form class="glass-form" id="reconcileNameForm">
+        <div class="field-label" data-i18n="chatNameLabel">YOUR NAME</div>
+        <input type="text" id="reconcileMyNameInput" data-i18n-placeholder="chatNamePlaceholder" placeholder="PICK A NAME" required>
+        <button type="submit" class="glass-btn action-btn" data-i18n="chatJoinBtn">ENTER THE ROOM</button>
+      </form>
+    </div>
+
+    <!-- View D: chat room -->
+    <div id="reconcileRoom" class="chat-room" style="display:none;">
+      <div class="reconcile-info-note" id="reconcileInfoNote"></div>
+      <div class="chat-messages" id="reconcileMessages"></div>
+      <form class="chat-input-row" id="reconcileSendForm">
+        <input type="text" id="reconcileMessageInput" data-i18n-placeholder="chatPlaceholder" placeholder="SAY SOMETHING…" autocomplete="off" required>
+        <button type="submit" class="glass-btn chat-send-btn" data-i18n="chatSendBtn">SEND</button>
+      </form>
+    </div>
+
+  </div>
+</section>
+
+<!-- ============ SUB PAGE : ROOMS (directory of every reconcile room made on this device — always password gated) ============ -->
+<section id="page-rooms" class="screen subpage has-video">
+  <video class="bg-video" autoplay muted loop playsinline>
+    <source src="lover.mp4" type="video/mp4">
+  </video>
+  <div class="subpage-bg lover-bg video-tint"></div>
+  <button class="home-btn" data-home>
+    <span class="home-icon">⌂</span> <span data-i18n="home">HOME</span>
+  </button>
+  <div class="subpage-content center-content">
+    <h1 class="subpage-title" data-i18n="roomsTitle">LET'S MAKE UP — ROOMS</h1>
+    <p class="subpage-text" data-i18n="roomsText">Every room you create lives here. Open one and enter its password to get back in.</p>
+
+    <div class="rooms-list" id="roomsList">
+      <p class="hint-text" id="roomsEmpty" data-i18n="roomsEmpty">No rooms yet — create one from Let's Make Up.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SUB PAGE : ADMIN (password protected — owner only) ============ -->
+<section id="page-admin" class="screen subpage">
+  <div class="subpage-bg"></div>
+  <button class="home-btn" data-home>
+    <span class="home-icon">⌂</span> HOME
+  </button>
+  <div class="subpage-content admin-content">
+    <h1 class="subpage-title">ADMIN</h1>
+
+    <div class="admin-tabs">
+      <button class="admin-tab active" data-admin-tab="inbox">MESSAGES FOR ME</button>
+      <button class="admin-tab" data-admin-tab="deliver">DELIVER A MESSAGE</button>
+      <button class="admin-tab" data-admin-tab="confess">CONFESSIONS</button>
+      <button class="admin-tab" data-admin-tab="chat">CONFESSION CHAT</button>
+      <button class="admin-tab" data-admin-tab="poems">POEMS</button>
+    </div>
+
+    <div class="admin-panel-view active" id="adminInboxView">
+      <div class="admin-list" id="adminInboxList">
+        <p class="hint-text">No messages yet.</p>
+      </div>
+    </div>
+
+    <div class="admin-panel-view" id="adminDeliverView">
+      <div class="admin-list" id="adminDeliverList">
+        <p class="hint-text">No messages yet.</p>
+      </div>
+    </div>
+
+    <div class="admin-panel-view" id="adminConfessView">
+      <button type="button" class="glass-btn action-btn admin-delete-btn" id="adminConfessDeleteBtn">DELETE SELECTED</button>
+      <div class="admin-list admin-list-selectable" id="adminConfessList">
+        <p class="hint-text">No messages yet.</p>
+      </div>
+    </div>
+
+    <div class="admin-panel-view" id="adminChatView">
+      <button type="button" class="glass-btn action-btn admin-delete-btn" id="adminChatDeleteBtn">DELETE SELECTED</button>
+      <div class="admin-list admin-list-selectable" id="adminChatList">
+        <p class="hint-text">No messages yet.</p>
+      </div>
+    </div>
+
+    <div class="admin-panel-view" id="adminPoemsView">
+      <button type="button" class="glass-btn action-btn admin-delete-btn" id="adminPoemsDeleteBtn">DELETE SELECTED</button>
+      <div class="admin-list admin-list-selectable" id="adminPoemsList">
+        <p class="hint-text">No messages yet.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script src="translations.js"></script>
+<script src="script.js"></script>
+</body>
+</html>
