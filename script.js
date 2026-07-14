@@ -20,7 +20,7 @@ document.addEventListener('DOMContentLoaded', () => {
      https://berlin-transmission-api.onrender.com
      Do NOT add a trailing slash.
      ========================================================= */
-  const API_BASE = 'https://YOUR-RENDER-APP-NAME.onrender.com';
+ const API_BASE = "https://berlin-website-e3yi.onrender.com";
 
   /* Set once the admin logs in successfully (see ADMIN LOCK below).
      Sent as a header on every admin-only request so the server can
