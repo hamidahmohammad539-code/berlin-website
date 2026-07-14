@@ -1092,4 +1092,9 @@ input:focus-visible,
 textarea:focus-visible{
   outline:2px solid var(--cyan);
   outline-offset:3px;
+/* تصغير الأيقونات للهواتف */
+@media (max-width: 600px) {
+    img, svg {
+        max-width: 50px !important;
+    }
 }
