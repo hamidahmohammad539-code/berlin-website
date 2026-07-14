@@ -20,7 +20,11 @@ if (!MONGODB_URI) {
   process.exit(1);
 }
 
-app.use(cors());               // allow the static frontend (any origin) to call this API
+app.use(cors({
+    origin: '*',
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+    allowedHeaders: ['Content-Type', 'Authorization']
+}));
 app.use(express.json({ limit: '15mb' })); // 15mb: chat/reconcile avatars & room photos are base64 images
 
 /* ---------------------------------------------------------
