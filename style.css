@@ -1092,9 +1092,12 @@ input:focus-visible,
 textarea:focus-visible{
   outline:2px solid var(--cyan);
   outline-offset:3px;
-/* تصغير الأيقونات للهواتف */
+/* تصغير حاوية الأيقونات فقط في الهواتف */
 @media (max-width: 600px) {
-    img, svg {
-        max-width: 50px !important;
+    /* هنا نضع الكلاس الذي يحيط بالأيقونات (يجب أن تتأكد من اسمه في ملف HTML) */
+    /* إذا كان اسمه header-icons مثلاً، نكتبه هكذا: */
+    .header-icons { 
+        transform: scale(0.7); /* هذا يصغر الحجم بنسبة 30% دون تغيير الترتيب */
+        transform-origin: top left; /* يضمن بقاء الأيقونات في مكانها */
     }
 }
